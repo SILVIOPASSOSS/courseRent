@@ -1,5 +1,4 @@
-import { getRepository } from "typeorm";
-
+import dataSource from "../../../../database/data-source";
 import { Specification } from "../../entities/Specification";
 import {
     ISpecificationsRepository,
@@ -10,7 +9,7 @@ class SpecificationsRepository implements ISpecificationsRepository {
     private repository: Repository<Specification>;
 
     constructor() {
-        this.repository = getRepository(Specification);
+        this.repository = dataSource.getRepository(Specification);
     }
 
     async create({
@@ -26,7 +25,7 @@ class SpecificationsRepository implements ISpecificationsRepository {
     }
 
     async findByName(name: string): Promise<Specification> {
-        const specification = this.repository.findOne({ name });
+        const specification = this.repository.findOneBy({ name });
         return specification;
     }
 }

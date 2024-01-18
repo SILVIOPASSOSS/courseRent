@@ -1,5 +1,6 @@
-import { Repository, getRepository } from "typeorm";
+import { Repository } from "typeorm";
 
+import dataSource from "../../../../database/data-source";
 import { Category } from "../../entities/Category";
 import {
     ICategoriesRepository,
@@ -10,7 +11,7 @@ class CategoriesRepository implements ICategoriesRepository {
     private repository: Repository<Category>;
 
     constructor() {
-        this.repository = getRepository(Category);
+        this.repository = dataSource.getRepository(Category);
     }
 
     /* public static getInstance(): CategoriesRepository {
@@ -35,7 +36,7 @@ class CategoriesRepository implements ICategoriesRepository {
     }
 
     async findByName(name: string): Promise<Category> {
-        const category = await this.repository.findOne({ name });
+        const category = await this.repository.findOneBy({ name });
         return category;
     }
 }
